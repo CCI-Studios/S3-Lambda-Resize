@@ -48,13 +48,15 @@ exports.handler = function (event, context, callback) {
         callback(new Error('Could not determine the image type.'))
         return
       }
-      var imageType = typeMatch[1]
-      if (imageType !== 'jpg' && imageType !== 'png') {
+      var imageType = typeMatch[1].toLowerCase()
+      if (imageType !== 'jpg' && imageType !== 'jpeg' && imageType !== 'png') {
         next(null, response.ContentType, response.Body)
         return
       }
 
-      gm(response.Body).size(function (err, size) {
+      gm(response.Body)
+      .interlace('line')
+      .size(function (err, size) {
         // Infer the scaling factor to avoid stretching the image unnaturally.
         var scalingFactor = Math.min(
           MAX_WIDTH / size.width,
