@@ -55,7 +55,9 @@ exports.handler = function (event, context, callback) {
       }
 
       gm(response.Body)
+      .strip()
       .interlace('line')
+      .quality(75)
       .size(function (err, size) {
         // Infer the scaling factor to avoid stretching the image unnaturally.
         var scalingFactor = Math.min(
