@@ -84,7 +84,8 @@ exports.handler = function (event, context, callback) {
         Bucket: dstBucket,
         Key: dstKey,
         Body: data,
-        ContentType: contentType
+        ContentType: contentType,
+        CacheControl: 'public, max-age=31536000'
       }, next)
     }
   ], function (err) {
